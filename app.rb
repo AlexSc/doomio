@@ -41,7 +41,7 @@ class Doomio < Sinatra::Application
     if !@user["share_id"]
       @user["share_id"] = SecureRandom.uuid
       @orchestrate.kv_put("users", session[:user_id], @user)
-      @orchestrate.kv_put("shares", @user["share_id"], session[:user_id])
+      @orchestrate.kv_put("shares", @user["share_id"], {user_id: session[:user_id]})
     end
     @clocks = @orchestrate.graph_get("users", session[:user_id], "owns")["results"] || []
     erb :dashboard
