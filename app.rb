@@ -19,7 +19,7 @@ class Doomio < Sinatra::Application
 
   post '/login' do
     payload = params[:signed_request].split('.')[1]
-    payload = JSON.parse(Base64.decode(payload.gsub('-', '+').gsub('_', '/')))
+    payload = JSON.parse(Base64.decode64(payload.gsub('-', '+').gsub('_', '/')))
     user_id = payload["user_id"]
     @user = @orchestrate.kv_get("users", user_id)
     if !@user
