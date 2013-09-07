@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'base64'
+require 'securerandom'
 require 'lib/orchestrate'
 
 class Doomio < Sinatra::Application
@@ -32,6 +33,23 @@ class Doomio < Sinatra::Application
   end
 
   get '/dashboard' do
+    @clocks = @orchestrate.graph_get("users", session[:user_id], "owns")["results"]
     erb :dashboard
+  end
+
+  post '/clocks' do
+    content_type :json
+    clock_id = SecureRandom.uuid
+    time = Chronic.parse(params[:time])
+    if !time
+      halt 400, {error: "Invalid Time"}.to_json
+    end
+    if !params[:title]
+      halt 400, {error: "Title is required"}.to_json
+    end
+    clock = {title: params[:title], end_time: time.to_i, owner: session[:user_id]}
+    @orchestrate.kv_put("clocks", clock_id, clock)
+    @orchestrate.graph_put("users", session[:user_id], "owns", "clocks", clock_id)
+    halt 200, clock.to_json
   end
 end

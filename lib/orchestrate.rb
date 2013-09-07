@@ -21,4 +21,12 @@ class Orchestrate
       response.parsed_response
     end
   end
+
+  def graph_put(collection, key, relation, collection_b, key_b)
+    response = HTTParty.put("#{@endpoint}/#{collection}/#{key}/relations/#{relation}/#{collection_b}/#{key_b}", basic_auth: @auth, headers: HEADERS)
+  end
+
+  def graph_get(collection, key, relation)
+    response = HTTParty.get("#{@endpoint}/#{collection}/#{key}/relations/#{relation}", basic_auth: @auth, headers: HEADERS)
+  end
 end
