@@ -26,7 +26,7 @@ class Orchestrate
     response = HTTParty.put("#{@endpoint}/#{collection}/#{key}/relations/#{relation}/#{collection_b}/#{key_b}", basic_auth: @auth, headers: HEADERS)
   end
 
-  def graph_get(collection, key, relation)
-    response = HTTParty.get("#{@endpoint}/#{collection}/#{key}/relations/#{relation}", basic_auth: @auth, headers: HEADERS)
+  def graph_get(collection, key, *relations)
+    response = HTTParty.get("#{@endpoint}/#{collection}/#{key}/relations?hop=#{relations[0]}", basic_auth: @auth, headers: HEADERS)
   end
 end
