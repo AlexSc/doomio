@@ -34,6 +34,7 @@ class Doomio < Sinatra::Application
 
   get '/dashboard' do
     @clocks = @orchestrate.graph_get("users", session[:user_id], "owns")["results"]
+    p @clocks
     erb :dashboard
   end
 
