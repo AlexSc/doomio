@@ -2,6 +2,7 @@ require 'sinatra'
 require 'base64'
 require 'securerandom'
 require 'lib/orchestrate'
+require 'chronic'
 
 class Doomio < Sinatra::Application
   enable :sessions
