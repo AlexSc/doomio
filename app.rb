@@ -53,6 +53,6 @@ class Doomio < Sinatra::Application
     clock = {title: params[:title], end_time: time.to_i, owner: session[:user_id]}
     @orchestrate.kv_put("clocks", clock_id, clock)
     @orchestrate.graph_put("users", session[:user_id], "owns", "clocks", clock_id)
-    halt 200, clock.to_json
+    halt 200, clock.merge({id: clock_id}).to_json
   end
 end
