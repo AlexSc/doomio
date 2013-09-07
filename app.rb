@@ -10,7 +10,9 @@ class Doomio < Sinatra::Application
   end
 
   get '/' do
-    if session[:user_id] && @orchestrate.kv_get("users", session[:user_id])
+    if session[:user_id] && (@user = @orchestrate.kv_get("users", session[:user_id]))
+      @user["last_login"] = Time.now.to_i
+      @orchestrate.kv_put("users", session[:user_id], @user)
       redirect '/dashboard'
     else
       erb :index
