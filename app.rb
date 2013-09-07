@@ -65,7 +65,7 @@ class Doomio < Sinatra::Application
 
   get '/shares/:id' do
     share = @orchestrate.kv_get("shares", params[:id])
-    clocks = @orchestrate.graph_get("users", share["user_id"], "owns")["results"] || []
+    @clocks = @orchestrate.graph_get("users", share["user_id"], "owns")["results"] || []
     erb :shares
   end
 end
