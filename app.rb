@@ -33,8 +33,10 @@ class Doomio < Sinatra::Application
   end
 
   get '/dashboard' do
+    if !session[:user_id]
+      redirect '/'
+    end
     @clocks = @orchestrate.graph_get("users", session[:user_id], "owns")["results"]
-    p @clocks
     erb :dashboard
   end
 
