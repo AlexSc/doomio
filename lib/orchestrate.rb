@@ -27,6 +27,8 @@ class Orchestrate
   end
 
   def graph_get(collection, key, *relations)
-    response = HTTParty.get("#{@endpoint}/#{collection}/#{key}/relations?hop=#{relations[0]}", basic_auth: @auth, headers: HEADERS)
+    url = "#{@endpoint}/#{collection}/#{key}/relations?hop=#{relations[0]}"
+    p url
+    response = HTTParty.get(url, basic_auth: @auth, headers: HEADERS)
   end
 end
