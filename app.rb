@@ -37,6 +37,12 @@ class Doomio < Sinatra::Application
     if !session[:user_id]
       redirect '/'
     end
+    @user = @orchestrate.kv_get("users", session[:user_id])
+    if !@user["share_id"]
+      @user["share_id"] = SecureRandom.uuid
+      @orchestrate.kv_put("users", @user)
+      @orchestrate.kv_put("shares", @user["share_id"], session[:user_id])
+    end
     @clocks = @orchestrate.graph_get("users", session[:user_id], "owns")["results"] || []
     erb :dashboard
   end
@@ -55,5 +61,11 @@ class Doomio < Sinatra::Application
     @orchestrate.kv_put("clocks", clock_id, clock)
     @orchestrate.graph_put("users", session[:user_id], "owns", "clocks", clock_id)
     halt 200, clock.merge({id: clock_id}).to_json
+  end
+
+  get '/shares/:id' do
+    share = @orchestrate.kv_get("shares", params[:id])
+    clocks = @orchestrate.graph_get("users", share["user_id"], "owns")["results"] || []
+    erb :shares
   end
 end

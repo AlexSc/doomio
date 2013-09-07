@@ -21,22 +21,12 @@
   </style>
 </head>
 <body>
-  <span>Share with your friends! https://doomio.herokuapp.com/shares/<%= @user["share_id"] %></span>
   <div id="wrapper">
     <% @clocks.each do |clock| %>
     <h2><%= clock["value"]["title"] %></h2>
     <div id="<%= clock["key"] %>"></div>
     <br />
     <%end %>
-  </div>
-  <div class="newclock">
-    <form id="add_clock">
-      <label for="title">Title</label>
-      <input type="text" name="title" />
-      <label for="time">When are you doomed?</label>
-      <input type="text" name="time" />
-      <input type="submit" value="Add clock" />
-    </form>
   </div>
   <script>
   $(document).ready(function() {
@@ -49,18 +39,6 @@
         image: "images/digits.png"
       });
     <% end %>
-    $("#add_clock").on("submit", function() {
-      $.post("/clocks", $(this).serialize(), function(response) {
-        $("#wrapper").append("<h2>" + response["title"] + "</h2><div id='" + response["id"] + "'></div><br/>");
-        var _date = new Date(response["end_time"] * 1000);
-        $("#" + response["id"]).countdown({
-          startTime: _date,
-          stepTime: 1,
-          image: "images/digits.png"
-        });
-      });
-      return false;
-    });
   });
   </script>
 </body>
