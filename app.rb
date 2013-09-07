@@ -6,7 +6,7 @@ class Doomio < Sinatra::Application
   enable :sessions
 
   before do
-    @orcestrate = Orchestrate.new(ENV["ORCHESTRATE_IO_API_KEY"])
+    @orchestrate = Orchestrate.new(ENV["ORCHESTRATE_IO_API_KEY"])
   end
 
   get '/' do
