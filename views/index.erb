@@ -31,7 +31,7 @@
       var hiddenField = document.createElement("input");
       hiddenField.setAttribute("name", "signed_request");
       hiddenField.setAttribute("value", response.authResponse.signedRequest);
-      hiddenField.setAttribute("tyep", "hidden");
+      hiddenField.setAttribute("type", "hidden");
       form.appendChild(hiddenField);
       document.body.appendChild(form);
       form.submit();
