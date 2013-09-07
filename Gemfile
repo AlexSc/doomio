@@ -7,3 +7,5 @@ gem "httparty"
 group :development do
   gem "foreman"
 end
+
+gem "newrelic_rpm"

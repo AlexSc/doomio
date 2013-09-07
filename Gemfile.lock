@@ -11,6 +11,7 @@ GEM
     kgio (2.8.0)
     multi_json (1.7.9)
     multi_xml (0.5.5)
+    newrelic_rpm (3.6.6.147)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
@@ -32,5 +33,6 @@ PLATFORMS
 DEPENDENCIES
   foreman
   httparty
+  newrelic_rpm
   sinatra
   unicorn
